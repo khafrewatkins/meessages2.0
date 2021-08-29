@@ -1,3 +1,4 @@
+// edit
 const passport = require('passport');
 
 module.exports = app => {
@@ -8,20 +9,24 @@ module.exports = app => {
     })
   );
 
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get('/auth/google/callback', passport.authenticate('google'),
+    (req, res) => { 
+      res.redirect('/surveys');
+    });
 
   app.get('/api/logout', (req, res) => {
+    // built-in logout function
     req.logout();
-    res.json(
+    // res.json(
       // adding the message is not required 
       // it seems that all that is required at this
       // point is to respond and maybe with json
       // issue prior was not logging out truly\
       // this is before the side was built.....
-      { status: "logout",
-      msg:"Please Log In again"}
-      );
-    res.send(req.user);
+      // { status: "logout",
+      // msg:"Please Log In again"}
+      // );
+    res.redirect('/');
   });
 
   app.get('/api/current_user', (req, res) => {
