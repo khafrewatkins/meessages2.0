@@ -6,6 +6,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 
@@ -23,8 +24,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// route handlers -require the route function and 
+// call the route function with the app object
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   // so express uses the production assets
